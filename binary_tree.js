@@ -1,3 +1,12 @@
+/**DONE create binary tree class and node class
+ * DONE create method for add elements
+ * DONE create method for search elements
+ * TODO create method for delete element
+ * TODO create method for modify element
+ * TODO create method for calculating tree size
+**/
+
+
 class Node {
     constructor(value) {
         this.value = value;
@@ -100,6 +109,44 @@ class BinaryTree {
             }
         }
     }
+
+    remove(value) {
+        this.root = this.removeNode(this.root, value);
+    }
+
+    // removeNode(current, value) {
+    //     //if the tree is empty
+    //     if(current === null) return current;
+    //     // case: value is the same as current's value, this is the node to be deleted
+    //     if( value === current.value ) {
+    //         //node without child or with one child
+    //         if(current.left === null && current.right === null) {
+    //             return null;
+    //         } else if {
+    //             if(current.left === null) {
+    //                 return current.right;
+    //         }
+    //         }
+    //     }
+    // }
+    find(value){
+        if(!this.root) return false
+
+        let current = this.root
+        let found = false
+        while(current && !found){
+            if(value < current.value){
+                current = current.left
+            } else if(value > current.value){
+                current = current.right
+            } else {
+                found = current
+            }
+        }
+        if(!found) return undefined;
+        return found
+    }
+
 }
 
 const myTree= new BinaryTree();
@@ -112,7 +159,8 @@ myTree.add(20);
 myTree.add(6);
 myTree.add(2);
 myTree.add(11);
+console.log(myTree.find(29));
 //console.log(myTree);
-myTree.traversDFS((node) => {
-    console.log(node.value);
-}, 'inOrder' );
+// myTree.traversDFS((node) => {
+//     console.log(node.value);
+// }, 'inOrder' );
