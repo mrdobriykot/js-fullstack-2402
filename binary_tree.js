@@ -1,9 +1,9 @@
 /**DONE create binary tree class and node class
  * DONE create method for add elements
  * DONE create method for search elements
- * TODO create method for delete element
- * TODO create method for modify element
- * TODO create method for calculating tree size
+ * DONE create method for delete element
+ * Done create method for modify element
+ * Done create method for calculating tree size
 **/
 
 
@@ -143,7 +143,7 @@ class BinaryTree {
             return current
         }
     }
-    /// helper function to find the smallest node
+    // find the smallest node
     findSmallestNode(node) {
         while(!node.left === null)
             node = node.left
@@ -168,6 +168,30 @@ class BinaryTree {
         if(!found) return undefined;
         return found
     }
+    modify(oldValue, newValue) {
+        const nodeToUpdate = this.find(oldValue);
+
+        if (nodeToUpdate) {
+            nodeToUpdate.value = newValue;
+            return true;
+        }
+
+        return false; // Value not found, modification unsuccessful
+    }
+
+    size(node = this.root) {
+        if(!node) return 0;
+
+        return 1 + this.size(node.left) + this.size(node.right);
+    }
+
+    print(node = this.root) {
+        if (node) {
+            this.print(node.left);
+            console.log(node.value);
+            this.print(node.right);
+        }
+    }
 
 }
 
@@ -181,10 +205,6 @@ myTree.add(20);
 myTree.add(6);
 myTree.add(2);
 myTree.add(11);
-// console.log(myTree.find(20));
-console.log(myTree.remove(8));
-console.log(myTree);
-//console.log(myTree);
-// myTree.traversDFS((node) => {
-//     console.log(node.value);
-// }, 'inOrder' );
+console.log('Размер дерева составил: ' + myTree.size());
+myTree.remove(7);
+console.log(myTree.size());
