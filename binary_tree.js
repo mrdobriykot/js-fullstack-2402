@@ -114,21 +114,43 @@ class BinaryTree {
         this.root = this.removeNode(this.root, value);
     }
 
-    // removeNode(current, value) {
-    //     //if the tree is empty
-    //     if(current === null) return current;
-    //     // case: value is the same as current's value, this is the node to be deleted
-    //     if( value === current.value ) {
-    //         //node without child or with one child
-    //         if(current.left === null && current.right === null) {
-    //             return null;
-    //         } else if {
-    //             if(current.left === null) {
-    //                 return current.right;
-    //         }
-    //         }
-    //     }
-    // }
+    removeNode(current, value) {
+        // base case, if the tree is empty
+        if(current === null) return current
+        // case: value is the same as current's value, this is the node to be deleted
+        if (value === current.value) {
+            // case 1 and 2, node without child or with one child
+            if (current.left === null && current.right === null){
+                return null
+            }else if(current.left === null){
+                return current.right
+            }else if(current.right === null){
+                return current.left
+            }else{
+                //case: node with two children, get the inorder successor smallest in the right subtree
+                let tempNode = this.findSmallestNode(current.right)
+                current.value = tempNode.value
+                // delete the in order successor
+                current.right = this.removeNode(current.right, tempNode.value)
+                return current
+            }
+            // recur down the tree
+        }else if(value < current.value) {
+            current.left = this.removeNode(current.left, value)
+            return current
+        }else{
+            current.right = this.removeNode(current.right, value)
+            return current
+        }
+    }
+    /// helper function to find the smallest node
+    findSmallestNode(node) {
+        while(!node.left === null)
+            node = node.left
+
+        return node
+    }
+
     find(value){
         if(!this.root) return false
 
@@ -159,7 +181,9 @@ myTree.add(20);
 myTree.add(6);
 myTree.add(2);
 myTree.add(11);
-console.log(myTree.find(29));
+// console.log(myTree.find(20));
+console.log(myTree.remove(8));
+console.log(myTree);
 //console.log(myTree);
 // myTree.traversDFS((node) => {
 //     console.log(node.value);
